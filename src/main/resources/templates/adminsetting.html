@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Change Credential</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+
+</head>
+
+<body>
+	<div class="container py-5">
+		<div class="alert alert-primary" role="alert alert-success" th:if="${success}"
+			style="background-color: #04AA6D;">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			<strong th:text="${success}"></strong>
+		</div>
+		<div class="alert alert-primary" role="alert alert-success" th:if="${error}" style="background-color: #f44336;">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			<strong th:text="${error}"></strong>
+		</div>
+		<div class="col-lg-9 mx-auto">
+			<ul class="list-group shadow">
+				<li class="list-group-item">
+					<div class="row">
+						<div class="column">
+							<h2 class="p-3">Update Data</h2>
+						</div>
+					</div>
+					<div class="media align-items-lg-center flex-column flex-lg-row p-3" th:if="${data}!=null">
+						<form th:action="@{/update-setting}" action="${setting}" method="POST">
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Email ID</label>
+								<input type="email" class="form-control" name="email" th:value="${data.email}" placeholder="Email ID">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Phone No.</label>
+								<input type="number" class="form-control" name="contact" th:value="${data.contact}" placeholder="Phone number">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Address</label>
+								<textarea type="text" class="form-control" name="address" th:text="${data.address}" placeholder="Address"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Facebook Link</label>
+								<input type="text" class="form-control" name="facebooklink" th:value="${data.facebooklink}" placeholder="Facebook Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Instagram Link</label>
+								<input type="text" class="form-control" name="instagramlink" th:value="${data.instagramlink}" placeholder="Instagram Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">X Link</label>
+								<input type="text" class="form-control" name="xlink" th:value="${data.xlink}" placeholder="X Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">LinkedIn Link</label>
+								<input type="text" class="form-control" name="linkedinlink" th:value="${data.linkedinlink}" placeholder="LinkedIn Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Pinterest Link</label>
+								<input type="text" class="form-control" name="pinterestlink" th:value="${data.pinterestlink}" placeholder="Pinterest Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Pagingnation Page Size</label>
+								<input type="number" class="form-control" name="pagesize" th:value="${data.pagesize}" placeholder="Pagingnation Page Size">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Minimum shoping Amount</label>
+								<input type="number" class="form-control" name="minshopingamount" th:value="${data.minshopingamount}" placeholder="Shoping Amount">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Shoping Charges</label>
+								<input type="number" class="form-control" name="charges" th:value="${data.charges}" placeholder="Shoping Amount">
+							</div>
+							<div class="form-group">
+								<button type="submit" class="form-control submit-button">Update Data</button>
+							</div>
+						</form>
+					</div>
+					<div class="media align-items-lg-center flex-column flex-lg-row p-3" th:if="${data}==null">
+						<form th:action="@{/update-setting}" action="${setting}" method="POST">
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Email ID</label>
+								<input type="email" class="form-control" name="email" placeholder="Email ID">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Phone No.</label>
+								<input type="number" class="form-control" name="contact" placeholder="Phone number">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Address</label>
+								<textarea type="text" class="form-control" name="address" placeholder="Address"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Facebook Link</label>
+								<input type="text" class="form-control" name="facebooklink" placeholder="Facebook Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Instagram Link</label>
+								<input type="text" class="form-control" name="instagramlink" placeholder="Instagram Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">X Link</label>
+								<input type="text" class="form-control" name="xlink" placeholder="X Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">LinkedIn Link</label>
+								<input type="text" class="form-control" name="linkedinlink" placeholder="LinkedIn Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Pinterest Link</label>
+								<input type="text" class="form-control" name="pinterestlink" placeholder="Pinterest Link">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Pagingnation Page Size</label>
+								<input type="number" class="form-control" name="pagesize" placeholder="Pagingnation Page Size">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Minimum shoping Amount</label>
+								<input type="number" class="form-control" name="minshopingamount" placeholder="Shoping Amount">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Shoping Charges</label>
+								<input type="number" class="form-control" name="charges" placeholder="Shoping Amount">
+							</div>
+							<div class="form-group">
+								<button type="submit" class="form-control submit-button">Update Data</button>
+							</div>
+						</form>
+					</div>
+				</li>
+			</ul>
+			<!--<form th:action="@{/update-setting/{field}(field="")}" action="${setting}" method="POST">
+							<div class="form-group px-2">
+								<label for="exampleFormControlInput3">Email ID</label>
+								<div class="d-flex justify-content-around">
+									<input type="text" class="col-10 p-2" name="olduser" placeholder="Email ID">
+									<button type="submit" class="col-2 p-2 site-btn">Update</button>
+								</div>
+							</div>
+						</form>
+						<form th:action="@{/update-setting/{field}(field="")}" action="${setting}" method="POST">
+							<div class="form-group px-2">
+								<label for="exampleFormControlInput3">Phone No.</label>
+								<div class="d-flex justify-content-around">
+									<input type="text" class="col-10 p-2" name="olduser" placeholder="Phone number">
+									<button type="submit" class="col-2 p-2 site-btn">Update</button>
+								</div>
+							</div>
+						</form>
+						<form th:action="@{/update-setting/{field}(field="")}" action="${setting}" method="POST">
+							<div class="form-group px-2">
+								<label for="exampleFormControlInput3">Address</label>
+								<div class="d-flex justify-content-around">
+									<input type="text" class="col-10 p-2" name="olduser" placeholder="Address">
+									<button type="submit" class="col-2 p-2 site-btn">Update</button>
+								</div>
+							</div>
+						</form>
+						<form th:action="@{/update-setting/{field}(field="")}" action="${setting}" method="POST">
+							<div class="form-group px-2">
+								<label for="exampleFormControlInput3">Facebook Link</label>
+								<div class="d-flex justify-content-around">
+									<input type="text" class="col-10 p-2" name="olduser" placeholder="Facebook Link">
+									<button type="submit" class="col-2 p-2 site-btn">Update</button>
+								</div>
+							</div>
+						</form>-->
+						
+</body>
+
+</html>

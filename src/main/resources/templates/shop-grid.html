@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Ogani Template">
+	<meta name="keywords" content="Ogani, unica, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Connect to Kisan All Products</title>
+
+	<!-- Google Font -->
+	<link th:href="@{/https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap}"
+		rel="stylesheet">
+
+	<!-- Css Styles -->
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/css/elegant-icons.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/css/nice-select.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/css/slicknav.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+
+	<style>
+		div .set-bg {
+			background-size: contain;
+		}
+	</style>
+</head>
+
+<body>
+	<div th:include="/header::header(cart=${headercarts},total=${headertotals},wishlist=${headerwishlists})"></div>
+	<!-- Hero Section Begin -->
+	<div th:include="/header::hero(department=${headerdepartments})"></div>
+	<!-- Hero Section End -->
+
+	<!-- Breadcrumb Section Begin -->
+	<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>Connect To Kisan Shop</h2>
+						<div class="breadcrumb__option">
+							<a th:href="@{/}">Home</a>
+							<span>Shop</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Breadcrumb Section End -->
+
+	<!-- Product Section Begin -->
+	<section class="product spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-7">
+					<div class="product__discount">
+						<div class="section-title product__discount__title">
+							<h2>Products</h2>
+						</div>
+						<div class="row">
+						</div>
+						<div class="filter__item">
+							<div class="row">
+								<div class="col-lg-4 col-md-5">
+									<div class="filter__sort">
+										<span>Sort By</span>
+										<select>
+											<option value="0">Default</option>
+											<option value="0">Default</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-4">
+									<div class="filter__found">
+										<h6><span th:text="${#lists.size(products)}"></span> Products found</h6>
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-3">
+									<div class="filter__option">
+										<span class="icon_grid-2x2"></span>
+										<span class="icon_ul"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-6 col-sm-6" th:each="product : ${products}">
+								<div class="product__item">
+									<div class="product__item__pic set-bg"
+										th:data-setbg="'MyFiles/Products/'+${product.productimage}">
+										<ul class="product__item__pic__hover">
+											<li>
+												<form th:action="@{/add_to_wishlist}" th:object="${wishlist}"
+													method="POST">
+													<input type="hidden" name="productid" th:value="${product.id}">
+													<a><button type="submit"
+															style="border: none; background-color: transparent;"><i
+																class="fa fa-heart"></button></i></a>
+												</form>
+											</li>
+											<li><a href="#"><i class="fa fa-retweet"></i></a></li>
+											<li>
+												<form th:action="@{/add_to_cart}" th:object="${cart}" method="POST">
+													<input type="hidden" name="quantity" value="1" min="1" max="10">
+													<input type="hidden" name="productid" th:value="${product.id}">
+													<a><button type="submit"
+															style="border: none; background-color: transparent;"><i
+																class="fa fa-shopping-cart"></button></i></a>
+												</form>
+											</li>
+										</ul>
+									</div>
+									<div class="product__item__text">
+										<h6><a th:text="${product.title}"
+												th:href="@{/product_details/{id}(id=${product.id})}"></a></h6>
+										<h6><del th:text="${product.mrp}"></del></h6>
+										<h5 th:text="${product.sellingprice}"></h5>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="product__pagination">
+							<nav aria-label="Page navigation" class="d-flex justify-content-end">
+					            <ul class="pagination">
+					                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+					                    <a th:href="@{/shop-grid/{data}(data=${data},page=0)}"><<</a>
+					                </li>
+					                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+					                    <a th:href="@{/shop-grid/{data}(data=${data},page=${currentPage - 1})}"><</a>
+					                </li>
+					                <li class="page-item" th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
+					                    th:classappend="${currentPage == i ? 'active' : ''}">
+					                    <a th:href="@{/shop-grid/{data}(data=${data},page=${i})}" th:text="${i + 1}"></a>
+					                </li>
+					                <li class="page-item" th:classappend="${currentPage == products.totalPages - 1 ? 'disabled' : ''}">
+					                    <a th:href="@{/shop-grid/{data}(data=${data},page=${currentPage + 1})}">></a>
+					                </li>
+					                <li class="page-item" th:classappend="${currentPage == products.totalPages - 1 ? 'disabled' : ''}">
+					                    <a th:href="@{/shop-grid/{data}(data=${data},page=${products.totalPages - 1})}">>></a>
+					                </li>
+					            </ul>
+					        </nav>
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+	<!-- Product Section End -->
+
+	<div th:insert="/footer::footer"></div>
+</body>
+
+</html>

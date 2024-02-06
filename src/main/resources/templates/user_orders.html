@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Order History</title>
+
+    <!-- Google Font -->
+    <link th:href="@{/https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap}" rel="stylesheet">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/nice-select.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+
+	<style>
+		body {
+			min-height: 100vh;
+		}
+
+		.text-gray {
+			color: #aaa;
+		}
+
+		.col {
+			display: inline-block;
+		}
+		img{
+			max-width: 60%;
+		}
+		.statcolor{
+			margin: 2%;
+			height: 15%;
+			width: 5%;
+			border-radius: 50%;
+			
+		}
+		.stat{
+    		float: left;
+		}
+		
+	</style>
+
+</head>
+
+<body>
+	<div th:include="/header::header(cart=${headercarts},total=${headertotals},wishlist=${headerwishlists})"></div>
+    <!-- Hero Section Begin -->
+    		<div th:include="/header::hero(department=${headerdepartments})"></div>
+    	<!-- Hero Section End -->
+    	
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-lg-12 mx-auto">
+				<!-- List group-->
+				<ul class="list-group shadow" th:each="billingdetail : ${billingdetails}">
+					<a th:href="@{/order-history/{id}(id=${billingdetail.id})}">
+					<li class="list-group-item">
+						<div class="media align-items-lg-center flex-column flex-lg-row p-3">
+							<div class="media-body order-2 order-lg-1">
+							<div class="row" th:each="order : ${orders}" th:if="${billingdetail.id==order.billingid}">
+								<div class="col col-2">
+									<img th:src="'MyFiles/Products/'+${order.productimage}"
+										alt="image" class="ml-lg-1 py-1 order-1 order-lg-2">
+								</div>
+								<div class="col cal-6" th:text="${order.title}"></div>
+								<div class="col cal-2" th:text="${order.sellingprice}*${order.quantity}"></div>
+								<div class="col cal-2" th:each="orderstatu: ${orderstatus}" th:if="${order.deliverystatus==orderstatu.id}" >
+									<div class="statcolor stat" th:style="${order.deliverystatus==2 || order.deliverystatus==3 ? 'background-color: #ff9f00' : order.deliverystatus==4 ? 'background-color: #26a541' : order.deliverystatus==5 || order.deliverystatus==6  ? 'background-color: #ff6161' : 'background-color: #6495ED'}"> </div>
+									<div class="stat" th:text="${orderstatu.status}+' '+${order.timeStamp}"></div>
+								</div>
+							</div>
+						</div>
+					</li>
+					</a>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div th:insert="/footer::footer"></div>
+</body>
+
+</html>
+
+<!--<table class="table table-borderless">
+										<tbody>
+											<tr>
+												<th>Order ID</th>
+												<td th:text="${order.id}"></td>
+											</tr>
+											<tr>
+												<th>Product ID</th>
+												<td th:text="${order.productid}"></td>
+											</tr>
+											<tr>
+												<th>Title</th>
+												<td th:text="${order.title}"></td>
+											</tr>
+											<tr>
+												<th>MRP</th>
+												<td th:text="${order.mrp}"></td>
+											</tr>
+											<tr>
+												<th>Price</th>
+												
+												<td th:text="${order.sellingprice}+'      *      '+${order.quantity}+'      =      '+${order.sellingprice}*${order.quantity} "></td>
+											</tr>
+											<tr>
+												<th>Department</th>
+												<span th:each="department: ${departments}" th:if="${department.id==order.department}">
+												<td th:text="${department.departmentname}"></td>
+												</span>
+											</tr>
+											<tr>
+												<th>Category</th>
+												<span th:each="category: ${categorys}" th:if="${category.id==order.category}">
+													<td th:text="${category.categoryname}"></td>
+												</span>
+											</tr>			
+										</tbody>
+									</table>-->

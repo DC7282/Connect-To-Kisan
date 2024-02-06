@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Delivery Order Details</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+	<style>
+		body {
+			min-height: 100vh;
+		}
+
+		.text-gray {
+			color: #aaa;
+		}
+
+		.col {
+			display: inline-block;
+		}
+		.cal-8 table tbody tr th{
+			width: 20%;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<div class="container py-5">
+		<div class="alert alert-primary" role="alert alert-success" th:if="${success}" style="background-color: #04AA6D;"> 
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	  		<strong th:text="${success}"></strong>
+	  	</div>
+		<div class="alert alert-primary" role="alert alert-success" th:if="${error}" style="background-color: #f44336;"> 
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	  		<strong th:text="${error}"></strong>
+	  	</div>
+		<div class="row">
+			<div class="col-lg-12 mx-auto">
+				<ul class="list-group shadow">
+					<li class="list-group-item">
+						<div class="media align-items-lg-center flex-column flex-lg-row p-3">
+							<div class="row">
+								<div class="col">
+									<table class="table table-borderless">
+										<tbody th:each="billingdetail : ${billingdetails}">
+											<tr>
+												<th>Billing ID</th>
+												<td th:text="${billingdetail.id}"></td>
+											</tr>
+											<tr>
+												<th>User ID</th>
+												<td th:text="${billingdetail.userid}"></td>
+											</tr>
+											<tr>
+												<th>First Name</th>
+												<td th:text="${billingdetail.firstname}"></td>
+											</tr>
+											<tr>
+												<th>Last Name</th>
+												<td th:text="${billingdetail.lastname}"></td>
+											</tr>
+											<tr>
+												<th>Address</th>
+												<td th:text="${billingdetail.address}"></td>
+											</tr>
+											<tr>
+												<th>Landmark</th>
+												<td th:text="${billingdetail.landmark}"></td>
+											</tr>
+											<tr>
+												<th>City</th>
+												<td th:text="${billingdetail.city}"></td>
+											</tr>
+											<tr>
+												<th>State</th>
+												<td th:text="${billingdetail.state}"></td>
+											</tr>
+											<tr>
+												<th>PastCode</th>
+												<td th:text="${billingdetail.pastcode}"></td>
+											</tr>
+											<tr>
+												<th>Register Phone</td>
+												<td th:text="${users.contact}"></td>
+											</tr>
+											<tr>
+												<th>Order Phone</th>
+												<td th:text="${billingdetail.phone}"></td>
+											</tr>
+											<tr>
+												<th>Email</th>
+												<td th:text="${billingdetail.email}"></td>
+											</tr>
+											<tr>
+												<th>Total Billing Amount</th>
+												<td th:text="${billingdetail.totalbillingamount}"></td>
+											</tr>
+											<tr>
+												<th>Order Status</th>
+												<span th:each="orderstatu: ${orderstatus}" th:if="${billingdetail.deliverystatus==orderstatu.id}">
+													<td th:text="${orderstatu.status}"></td>
+												</span>
+											</tr>
+											<tr>
+												<th>Time</th>
+												<td th:text="${billingdetail.timeStamp}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+
+				<!-- List group-->
+				<ul class="list-group shadow" th:each="order : ${orders}">
+
+					<li class="list-group-item">
+						<div class="media align-items-lg-center flex-column flex-lg-row p-3">
+							<div class="media-body order-2 order-lg-1">
+							<div class="row">
+								<div class="col col-4">
+									<img th:src="'../MyFiles/Products/'+${order.productimage}"
+										alt="image" width="80%" class="ml-lg-5 order-1 order-lg-2">
+								</div>
+								<div class="col cal-8">
+									<table class="table table-borderless">
+										<tbody>
+											<tr>
+												<th>Order ID</th>
+												<td th:text="${order.id}"></td>
+											</tr>
+											<tr>
+												<th>Product ID</th>
+												<td th:text="${order.productid}"></td>
+											</tr>
+											<tr>
+												<th>Title</th>
+												<td th:text="${order.title}"></td>
+											</tr>
+											<tr>
+												<th>MRP</th>
+												<td th:text="${order.mrp}"></td>
+											</tr>
+											<tr>
+												<th>Price</th>
+												
+												<td th:text="${order.sellingprice}+'      *      '+${order.quantity}+'      =      '+${order.sellingprice}*${order.quantity} "></td>
+											</tr>
+											<tr>
+												<th>Department</th>
+												<span th:each="department: ${departments}" th:if="${department.id==order.department}">
+												<td th:text="${department.departmentname}"></td>
+												</span>
+											</tr>
+											<tr>
+												<th>Category</th>
+												<span th:each="category: ${categorys}" th:if="${category.id==order.category}">
+													<td th:text="${category.categoryname}"></td>
+												</span>
+											</tr>			
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<form th:action="@{/update-delivery-status}" th:object="${OrderPlaced}" method="POST">
+									<div class="col col-8 my-2">								
+										<select class="form-control" name="deliverystatus">>
+											<option th:each="orderstate: ${orderstatus}" th:value="${orderstate.id}"
+												th:text="${orderstate.status}" th:selected="${order != null } ? ${order.deliverystatus==orderstate.id}"></option>
+										<input class="form-control" id="inputUsername" type="hidden" name="id" 
+											placeholder="Enter your username" th:value="${order.id}">
+										<input class="form-control" type="hidden" name="billingid" 
+											placeholder="Enter your username" th:value="${order.billingid}">
+										</select>
+									</div>
+									<div class="col cal-4">
+										<button class="btn submit-button" type="submit">Update changes</button>
+									</div>									
+								</form>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

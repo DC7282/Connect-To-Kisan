@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Connect to Kisan Contact</title>
+
+    <!-- Google Font -->
+    <link th:href="@{/https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap}" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/nice-select.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+
+<body>
+	<div th:include="/header::header(cart=${headercarts},total=${headertotals},wishlist=${headerwishlists})"></div>
+	
+	<div class="alert alert-primary" role="alert alert-success" th:if="${success}" style="background-color: #04AA6D;"> 
+		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  		<strong th:text="${success}"></strong>
+  	</div>
+	<div class="alert alert-primary" role="alert alert-success" th:if="${error}" style="background-color: #f44336;"> 
+		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  		<strong th:text="${error}"></strong>
+  	</div>
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Contact Us</h2>
+                        <div class="breadcrumb__option">
+                            <a th:href="@{/}">Home</a>
+                            <span>Contact Us</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Contact Section Begin -->
+    <section class="contact spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                    <div class="contact__widget">
+                        <span class="icon_phone"></span>
+                        <h4>Phone</h4>
+                        <p th:text="${settingdata.contact}"></p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                    <div class="contact__widget">
+                        <span class="icon_pin_alt"></span>
+                        <h4>Address</h4>
+                        <p th:text="${settingdata.address}"></p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                    <div class="contact__widget">
+                        <span class="icon_clock_alt"></span>
+                        <h4>Open time</h4>
+                        <p>10:00 am to 23:00 pm</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                    <div class="contact__widget">
+                        <span class="icon_mail_alt"></span>
+                        <h4>Email</h4>
+                        <p th:text="${settingdata.email}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section End -->
+
+    <!-- Map Begin -->
+    <div class="map">
+        <iframe
+            src="https://www.google.com/maps/place/3%2F2%2FA%2F37,+Anand+Colony,+Tapodham,+Warje,+Pune,+Maharashtra+411058/@18.479425,73.8048209,18z/data=!3m1!4b1!4m15!1m8!3m7!1s0x886ca48c841038a1:0x70cfba96bf847f0!2sPlainfield,+IN,+USA!3b1!8m2!3d39.7042123!4d-86.3994387!16zL20vMHNtNzA!3m5!1s0x3bc2bfd7fd389f9d:0xf133ebcde1b6b62d!8m2!3d18.479425!4d73.805944!16s%2Fg%2F11jgds4cm6?hl=en&entry=ttu"
+            height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        <div class="map-inside">
+            <i class="icon_pin"></i>
+            <div class="inside-widget">
+                <h4>Pune, India</h4>
+                <ul>
+                    <li th:text="'Phone: (+91) '+${settingdata.contact}"></li>
+                    <li th:text="'Add: '+${settingdata.address}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Map End -->
+
+    <!-- Contact Form Begin -->
+    <div class="contact-form spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="contact__form__title">
+                        <h2>Leave Message</h2>
+                    </div>
+                </div>
+            </div>
+            <form th:action="@{/addcontact}" th:object="${contact}" method="POST">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <input type="text" name="name" placeholder="Your name">
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <input type="text" name="email" placeholder="Your Email">
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <textarea name="message" placeholder="Your message"></textarea>
+                        <button type="submit" class="site-btn">SEND MESSAGE</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Contact Form End -->
+
+<div th:insert="/footer::footer"></div>
+</body>
+
+</html>

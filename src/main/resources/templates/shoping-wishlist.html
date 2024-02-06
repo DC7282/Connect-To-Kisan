@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wishlist</title>
+
+    <!-- Google Font -->
+    <link th:href="@{/https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap}" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/nice-select.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+ <style>
+		div .set-bg{
+			background-size: contain;
+			max-width: 20%;
+		}	
+		.btn{
+			margin: 20px;
+		}
+</style>
+<body>
+	<div th:include="/header::header(cart=${headercarts},total=${headertotals},wishlist=${headerwishlists})"></div>
+    <!-- Hero Section Begin -->
+    	<div th:include="/header::hero(department=${headerdepartments})"></div>
+    <!-- Hero Section End -->
+    
+    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Shopping Cart</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">Home</a>
+                            <span>Shopping Wishlist</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shoping Cart Section Begin -->
+    
+    
+    <section class="shoping-cart spad" th:with="cartquantity=0, ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <form th:action="@{/wishlist-to-cart}" method="POST">
+	                        <table>
+	                            <thead>
+	                                <tr>
+	                                    <th class="shoping__product">Products</th>
+	                                    <th>Price</th>
+	                                    <th></th>
+	                                </tr>
+	                            </thead>
+	                            <tbody th:each="product:${products}">
+	                                <tr>
+	                                    <td class="shoping__cart__item set-bg">
+	                                     <a th:href="@{/product_details/{id}(id=${product.id})}"> <img class="set-bg center" th:src="'MyFiles/Products/'+${product.productimage}" alt="">
+	                                        <h5 class="text single-line-cart" th:text="${product.title}"></h5></a>
+	                                    </td>
+	                                    	<input type="hidden" th:value="${product.sellingprice}" id="productsellingprice">
+	                                    <td class="shoping__cart__price" th:text="'₹'+${product.sellingprice}" >
+	                                    </td>
+	                                    <td class="shoping__cart__item__close">
+											<a th:href="@{/delete-wishlist-item/{id}(id=${product.id})}" class="icon_close" style="color: red; font-weight: bold;"></a>
+	                                    </td>
+	                                </tr>
+	                                <!--<tr th:unless="${product}==null">
+										<td>Cart is empty</td>
+	                                </tr>-->
+	                            </tbody>
+	                        </table>
+	                        <button class="btn primary-btn" type="submit">Add All Products to Cart</button>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a th:href="@{/shop-grid/{data}(data='All')}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a th:href="@{/shoping-wishlist}" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                            Upadate Cart</a>
+                    </div>
+                </div>
+                <!--<div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Cart Total</h5>
+                        <ul>
+                            <li>Before Discount <span th:text="'₹'+${totalmrp}"></span></li>
+                            <li>You Save <span th:text="'₹'+${totalsave}"></span></li>
+                            <li>After Discount <span th:text="'₹'+${afterdescount}"></span></li>
+                            <li>Delivery Charge <span th:text="${headertotalscharge}"></span></li>
+                            <li>Total <span th:text="'₹'+${headertotals}"></span></li>
+                        </ul>
+                        <a th:href="@{/checkout}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </section>
+    
+<div th:insert="/footer::footer"></div>
+</body>
+
+</html>

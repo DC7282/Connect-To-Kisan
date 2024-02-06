@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+<head>
+	<meta charset="ISO-8859-1">
+	<title th:text="${products.title}+' Product'">Product</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+	<script type="text/javascript" th:src="@{/js/dynamicDropdown.js}"></script>
+	<style>
+		body {
+			margin-top: 20px;
+		}
+
+		.img-account-profile {
+			max-height: 300px;
+		}
+
+		.rounded-circle {
+			border-radius: 8% !important;
+		}
+
+		.card {
+			box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+		}
+
+		.card .card-header {
+			font-weight: 500;
+		}
+
+		.card-header:first-child {
+			border-radius: 0.35rem 0.35rem 0 0;
+		}
+
+		.card-header {
+			padding: 1rem 1.35rem;
+			margin-bottom: 0;
+			background-color: #273442;
+			color: white;
+			border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+		}
+
+		.form-control,
+		.dataTable-input {
+			display: block;
+			width: 100%;
+			padding: 0.875rem 1.125rem;
+			font-size: 0.875rem;
+			font-weight: 400;
+			line-height: 1;
+			color: #69707a;
+			background-color: #fff;
+			background-clip: padding-box;
+			border: 1px solid #c5ccd6;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			border-radius: 0.35rem;
+			transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+		}
+
+		.nav-borders .nav-link.active {
+			color: #0061f2;
+			border-bottom-color: #0061f2;
+		}
+
+		.nav-borders .nav-link {
+			color: #69707a;
+			border-bottom-width: 0.125rem;
+			border-bottom-style: solid;
+			border-bottom-color: transparent;
+			padding-top: 0.5rem;
+			padding-bottom: 0.5rem;
+			padding-left: 0;
+			padding-right: 0;
+			margin-left: 1rem;
+			margin-right: 1rem;
+		}
+		.buttons{
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div class="container-xl px-4 mt-4">
+		<div class="alert alert-primary" role="alert alert-success" th:if="${success}"
+			style="background-color: #04AA6D;">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			<strong th:text="${success}"></strong>
+		</div>
+		<div class="alert alert-primary" role="alert alert-success" th:if="${error}" style="background-color: #f44336;">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			<strong th:text="${error}"></strong>
+		</div>
+		<div class="row">
+			<div class="col-xl-4">
+				<div class="card mb-4 mb-xl-0">
+					<div class="card-header">Product Insert</div>
+					<div class="card-body text-center">
+						<img class="img-account-profile rounded-circle mb-2"
+							th:src="'../MyFiles/Products/'+${products.productimage}" alt="">
+							
+						<!--    <button class="btn btn-primary" type="button">Upload new image</button> -->
+					</div>
+				</div>
+				<div class="card mb-4 mb-xl-0 mt-3">
+					<div class="card-header">Main Page Management</div>
+					<form th:action="@{/add-product-mainpagesection}" th:object="${productandmainpagesectionjoin}" method="POST">
+						<div class="card-body text-center">
+							<div class="mb-3">
+								<label class="small mb-1" for="inputLocation">Add Product on Main section</label>
+								<select class="form-control" name="mainpagesections" id="department">
+									<option value="" disabled selected>select an Section</option>
+									<option th:each="mainPageSection: ${mainPageSections}" th:value="${mainPageSection.id}"
+										th:text="${mainPageSection.sectionname}" th:selected="${selectedSections != null } ? ${selectedSections.mainpagesections==mainPageSection.id}"></option>
+								</select>
+								<input class="form-control" id="inputUsername" type="hidden" name="product" 
+									placeholder="Enter your username" th:value="${products.id}">
+							</div>
+							
+							<button class="btn submit-button" type="submit">Update changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-xl-8">
+				<div class="card mb-4">
+					<div class="card-header">Product Details</div>
+					<div class="card-body">
+						<form th:action="@{/update-product}" th:object="${Product}" method="POST" enctype="multipart/form-data">
+							<div class="mb-3">
+								<input class="form-control" type="hidden" name="id" th:value="${products.id}">
+								<label class="small mb-1" for="inputUsername">Product Title</label>
+								<input class="form-control" type="text" name="title" 
+									placeholder="Enter your username" th:value="${products.title}">
+							</div>
+							<div class="mb-3">
+								<label class="small mb-1" for="inputUsername">Product Discription</label>
+								<input class="form-control"type="text" name="discription" 
+									placeholder="Enter your username" th:value="${products.discription}">
+							</div>
+							<div class="row gx-3 mb-3">
+								<div class="col-md-6">
+									<label class="small mb-1" for="inputFirstName">Product MRP</label>
+									<input class="form-control" type="text" name="mrp" 
+										placeholder="Enter your first name" th:value="${products.mrp}">
+								</div>
+								<div class="col-md-6">
+									<label class="small mb-1" for="inputLastName">Product Selling Price</label>
+									<input class="form-control" type="text" name="sellingprice" 
+										placeholder="Enter your last name" th:value="${products.sellingprice}">
+								</div>
+							</div>
+							<div class="mb-3">
+								<label class="small mb-1" for="inputOrgName">Product Availability</label>
+								<select class="form-control" name="availability">
+									<option th:each="availability : ${availabilitys}" th:value="${availability.id}" th:text="${availability.status}" th:selected="${availability.id==products.availability}"></option>
+								</select>
+							</div>
+							<div class="mb-3">
+								<label class="small mb-1" for="inputLocation">Department</label>
+								<select class="form-control" name="department" id="department" th:selected="${departmentname}"
+									th:onchange="getProductData(this.value)">
+									<option value="" disabled selected>select an Department</option>
+									<option th:each="department: ${departments}" th:value="${department.id}"
+										th:text="${department.departmentname}" th:selected="${products.department==department.id}"></option>
+								</select>
+							</div>
+							<div class="mb-3">
+								<label class="small mb-1" for="inputLocation">Product Category</label>
+								<select class="form-control" name="category" id="productdropdown">
+									<option value="" disabled selected>select an Category</option>
+									<option th:each="category : ${categorys}" th:value="${category.id}"
+										th:text="${category.categoryname}" th:selected="${category.id==products.category}"></option>
+								</select>
+							</div>
+							<div class="mb-3">
+								<label for="exampleFormControlInput3">Product Image</label>
+								<input type="file" class="form-control" name="productimages">
+							</div>
+							<div class="mb-3 buttons">
+								<button class="btn submit-button" type="submit">Update changes</button>
+								
+								<span th:if="${products.status}==1">
+									<td><a th:href="@{/disable-product/{status}/{id}(status=2, id=${products.id})}"
+										class="btn btn-danger">Delete Product</a></td>		
+								</span>
+								
+								<span th:if="${products.status}==2">
+									<td><a th:href="@{/disable-product/{status}/{id}(status=1, id=${products.id})}"
+										class="btn btn-primary">Readd Product</a></td>		
+								</span>
+								
+							</div>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Add Products</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+	<script type="text/javascript" th:src="@{/js/dynamicDropdown.js}"></script>
+</head>
+
+<body>
+
+	<div class="container py-5">
+		<div class="alert alert-primary" role="alert alert-success" th:if="${success}"
+			style="background-color: #04AA6D;">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			<strong th:text="${success}"></strong>
+		</div>
+		<div class="alert alert-primary" role="alert alert-success" th:if="${error}" style="background-color: #f44336;">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			<strong th:text="${error}"></strong>
+		</div>
+		<div class="col-lg-9 mx-auto">
+			<ul class="list-group shadow">
+				<li class="list-group-item">
+					<div class="row">
+						<div class="column">
+							<h2 class="p-3">Add Product Details</h2>
+						</div>
+					</div>
+					<div class="media align-items-lg-center flex-column flex-lg-row p-3">
+						<form th:action="@{/product-added}" th:object="${Product}" method="POST" enctype="multipart/form-data">
+
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Product Title</label>
+								<input type="text" class="form-control" name="title" placeholder="S23">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Product Discription</label>
+								<textarea type="text" class="form-control" name="discription"
+									placeholder="product information"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Product MRP</label>
+								<input type="number" class="form-control" name="mrp" placeholder="1999">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Product Selling Price</label>
+								<input type="number" class="form-control" name="sellingprice" placeholder="999">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Product Availability</label>
+								<select class="form-control" name="availability" id="availability">
+									<option value="" disabled selected>select an Product Aavailability</option>
+									<option th:each="availability : ${availabilitys}" th:value="${availability.id}"
+										th:text="${availability.status}"></option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlSelect2">Department</label>
+								<select class="form-control" name="department" id="department"
+									th:onchange="getProductData(this.value)">
+									<option value="" disabled selected>select an Department</option>
+									<option th:each="department: ${departments}" th:value="${department.id}"
+										th:text="${department.departmentname}"></option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlSelect2">Product Category</label>
+								<select class="form-control" name="category" id="productdropdown">
+									<option value="" disabled selected>select an Product Category</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Product Image</label>
+								<input type="file" class="form-control" name="productimage" multiple="multiple">
+							</div>
+							<div class="form-group">
+								<button type="submit" class="form-control submit-button">ADD Category</button>
+							</div>
+						</form>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!--
+	<div class="form-cont">
+		<div class="alert alert-primary" role="alert alert-success" th:if="${success}" style="background-color: #04AA6D;"> 
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	  		<strong th:text="${success}"></strong>
+	  	</div>
+		<div class="alert alert-primary" role="alert alert-success" th:if="${error}" style="background-color: #f44336;"> 
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+	  		<strong th:text="${error}"></strong>
+	  	</div>
+  	 enctype="multipart/form-data" 
+		<h2 class="form-headign-h2">Add Category Form</h2>
+	<form  th:action="@{/product-added}" th:object="${Product}" method="POST" enctype="multipart/form-data">
+		
+		<div class="form-group">
+	    	<label for="exampleFormControlInput3">Product Title</label>
+	    	<input type="text" class="form-control" name="title" placeholder="S23">
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="exampleFormControlInput3">Product Discription</label>
+	    	<textarea type="text" class="form-control" name="discription" placeholder="product information"></textarea>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="exampleFormControlInput3">Product MRP</label>
+	    	<input type="number" class="form-control" name="mrp" placeholder="1999">
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="exampleFormControlInput3">Product Selling Price</label>
+	    	<input type="number" class="form-control" name="sellingprice" placeholder="999">
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="exampleFormControlInput3">Product Availability</label>
+	    	<select class="form-control" name="availability" id="availability">
+		      	<option value="" disabled selected>select an Product Aavailability</option>
+		      	<option th:each="availability : ${availabilitys}" th:value="${availability.id}" th:text="${availability.status}"></option>
+	    	</select>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="exampleFormControlSelect2">Department</label>
+	    	<select class="form-control" name="department" id="department" th:onchange="getProductData(this.value)">
+		      	<option value="" disabled selected>select an Department</option>
+		      	<option 
+        			th:each="department: ${departments}"
+        			th:value="${department.id}" 
+        			th:text="${department.departmentname}"></option>
+	    	</select>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="exampleFormControlSelect2">Product Category</label>
+	    	<select class="form-control" name="category" id="productdropdown" >
+		      	<option value="" disabled selected>select an Product Category</option>
+	    	</select>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="exampleFormControlInput3">Product Image</label>
+	    	<input type="file" class="form-control" name="productimages" multiple="multiple">
+	  	</div>
+	    <div class="form-group">	
+	    	<button type="submit" class="form-control submit-button">ADD Category</button>
+	  	</div>
+	</form>
+	</div>-->
+</body>
+
+</html>

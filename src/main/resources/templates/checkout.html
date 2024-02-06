@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Connect to Kisan Cart</title>
+
+    <!-- Google Font -->
+    <link th:href="@{/https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap}" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/nice-select.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    
+    <style>
+		th, td{
+			padding: 5px 15px;
+		}
+	</style>
+</head>
+
+<body>
+	<div th:include="/header::header(cart=${headercarts},total=${headertotals},wishlist=${headerwishlists})"></div>
+    <!-- Hero Section Begin -->
+    		<div th:include="/header::hero(department=${headerdepartments})"></div>
+    	<!-- Hero Section End -->
+    	
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Checkout</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">Home</a>
+                            <span>Checkout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <!--<div class="row">
+                <div class="col-lg-12">
+                    <h6><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click here</a> to enter your code
+                    </h6>
+                </div>
+            </div>-->
+            <div class="checkout__form">
+                <h4>Billing Details</h4>
+                <form th:action="@{/billing}" th:object="${BillingDetails}" method="POST">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Fist Name<span>*</span></p>
+                                        <input type="text" name="firstname" th:value="${user.firstname}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Last Name<span>*</span></p>
+                                        <input type="text" name="lastname" th:value="${user.lastname}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="checkout__input">
+                                <p>Country<span>*</span></p>
+                                <input type="text">
+                            </div>-->
+                            <span th:if="${addresses==null}">
+                            <div class="checkout__input">
+                                <p>Address<span>*</span></p>
+                                <input type="text" name="address" placeholder="Street Address" class="checkout__input__add" required>
+                            </div>
+                            
+                            <div class="checkout__input">
+                                <p>Landmark<span>*</span></p>
+                                <input type="text" name="landmark" required>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Town/City<span>*</span></p>
+                                <input type="text" name="city" required>
+                            </div>
+                            <div class="checkout__input">
+                                <p>State<span>*</span></p>
+                                <input type="text" name="state" required>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Postcode / ZIP<span>*</span></p>
+                                <input type="text" name="pastcode" required>
+                            </div>
+                            </span>
+                            <span th:if="${addresses!=null}">
+                            <div class="checkout__input">
+                                <p>Address<span>*</span></p>
+                                <input type="text" name="address" th:value="${addresses.location}" placeholder="Street Address" class="checkout__input__add" required>
+                            </div>
+                            
+                            <div class="checkout__input">
+                                <p>Landmark<span>*</span></p>
+                                <input type="text" name="landmark" th:value="${addresses.landmark}" required>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Town/City<span>*</span></p>
+                                <input type="text" name="city" th:value="${addresses.city}" required>
+                            </div>
+                            <div class="checkout__input">
+                                <p>State<span>*</span></p>
+                                <input type="text" name="state" th:value="${addresses.state}" required>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Postcode / ZIP<span>*</span></p>
+                                <input type="text" name="pastcode" th:value="${addresses.postcode}" required>
+                            </div>
+                            </span>
+                            
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phone<span>*</span></p>
+                                        <input type="text" name="phone" th:value="${user.contact}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email<span>*</span></p>
+                                        <input type="text" name="email" th:value="${user.email}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <h4>Your Order</h4>
+                                <!--<div class="checkout__order__products">Products <span>Total</span></div>-->
+                                <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Products</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody th:each="product:${products}">
+                                <tr>
+                                    <td class="shoping__cart__item set-bg">
+                                 
+                                        <p class="text single-line" th:text="${product.title}"></p>
+                                    </td>
+                                  
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                         
+												<span th:each="cart : ${cartitem}" th:if="${product.id==cart.productid}">
+                                                	<div th:text="${cart.quantity}" ></div>
+                                                	<!--<span th:with="producttotal=${cart.quantity} * ${product.sellingprice}"></span>-->
+                                            	</span>
+                                           
+                                        </div>
+                                    </td>
+                                    <span th:each="cart : ${cartitem}" th:if="${product.id==cart.productid}">
+                                    <td class="shoping__cart__total" th:text="'₹'+${cart.quantity} * ${product.sellingprice}">
+                                        $110.00
+                                    </td>
+                                    </span>
+                                </tr>
+                            </tbody>
+                        </table>
+                                <!--<ul th:each="product:${products}">
+									<span th:each="cart : ${cartitem}" th:if="${product.id==cart.productid}"></span>
+                                    <li class="text single-line" th:text="${product.title}"><span th:text="'₹'+${product.sellingprice}"></span></li>        
+                                </ul>-->
+                            <div class="checkout__order__subtotal">Before Discount <span th:text="'₹'+${totalmrp}"></span></div>
+                            <div class="checkout__order__total">You Save <span th:text="'₹'+${totalsave}">$454.98</span></div>
+                            <div class="checkout__order__total">After Discount <span th:text="'₹'+${afterdescount}"></span></div>  
+                            <div class="checkout__order__total">Delivery Charge <span th:text="${headertotalscharge}"></span></div>
+                            <div class="checkout__order__total">Total <span th:text="'₹'+${headertotals}">$454.98</span></div>
+                                <!--<div class="checkout__input__checkbox">
+                                    <label for="acc-or">
+                                        Create an account?
+                                        <input type="checkbox" id="acc-or">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
+                                    ut labore et dolore magna aliqua.</p>-->
+                                <!--<div class="checkout__input__checkbox">
+                                    <label for="payment">
+                                        Check Payment
+                                        <input type="checkbox" id="payment">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>-->
+                                <!--<div class="checkout__input__checkbox">
+                                    <label for="paypal">
+                                        Paypal
+                                        <input type="checkbox" id="paypal">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>-->
+                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Checkout Section End -->
+
+<div th:insert="/footer::footer"></div>
+</body>
+
+</html>
